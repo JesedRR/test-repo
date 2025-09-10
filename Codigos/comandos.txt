@@ -1,0 +1,47 @@
+# Activar ambiente
+proyecto-finanzas\Scripts\activate
+
+# Correr el proyecto
+uvicorn main:app --reload
+
+# Sitio del proyecto
+http://127.0.0.1:8000/
+
+
+
+
+
+----------------------------------Estructura-------------------------------
+finanzas-ai/
+│── main.py              # Punto de entrada de la API
+│── requirements.txt     # Dependencias
+│── .env                 # Variables de entorno (ej: API keys)
+│
+├── app/
+│   ├── models/          # Modelos de BD (SQLAlchemy)
+│   ├── schemas/         # Pydantic (validación)
+│   ├── routes/          # Endpoints/routers
+│   ├── services/        # Lógica de negocio
+│   └── db.py            # Conexión a la base de datos
+
+*****************************************************************************************************
+
+| Componente                          | Carpeta     | Función en tu proyecto                                                                                  |
+| ----------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------- |
+| **API / Endpoints**                 | `routes/`   | Exponer rutas REST, recibir solicitudes HTTP de la app móvil.                                           |
+| **Servicios / Casos de uso**        | `services/` | Lógica de negocio: registrar gastos, analizar patrones, generar recomendaciones, calcular presupuestos. |
+| **Modelos / Entidades**             | `models/`   | Tablas SQLAlchemy que representan usuarios, gastos, categorías y alias.                                 |
+| **Schemas / DTOs**                  | `schemas/`  | Validación de entrada y salida de datos, contratos entre API y lógica de negocio.                       |
+| **Base de datos / Infraestructura** | `db.py`     | Conexión a PostgreSQL y manejo de sesiones.                                                             |
+| **Punto de entrada**                | `main.py`   | Inicializa FastAPI, registra routers, inyecta dependencias.                                             |
+
+*****************************************************************************************************
+-- Pyload suggestions bd ---
+
+-- Payload suggestions 
+--{
+-- "category": "comida",
+-- "current": 3500,
+-- "limit": 2500,
+-- "tip": "Reduce pedidos de UberEats a 1 vez por semana"
+--}

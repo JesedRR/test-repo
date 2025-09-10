@@ -1,0 +1,14 @@
+# Entorno virtual
+Lib/
+Include/
+Scripts/
+venv/
+env/
+
+# Python
+*.pyc
+__pycache__/
+
+# IDEs
+.vscode/
+.idea/

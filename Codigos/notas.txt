@@ -1,0 +1,94 @@
+[Cliente / App móvil] 
+       |
+       v
+[DTO de entrada]  <-- Pydantic valida
+       |
+       v
+[Service]  <-- usa Entity + Model para lógica de negocio
+       |
+       v
+[DB / Model]  <-- persiste o consulta datos
+       |
+       v
+[Entity]  <-- representa el objeto de negocio
+       |
+       v
+[DTO de salida]  <-- transforma la entidad a JSON seguro
+       |
+       v
+[Cliente / App móvil]
+
+
+
+
+
+*****************************************************************************************
+Componentes principales
+
+App Móvil
+
+Interfaz de usuario.
+
+Envía solicitudes a la API para registrar gastos, recibir análisis y recomendaciones.
+
+API Backend (FastAPI)
+
+Endpoints REST para usuarios, gastos, análisis, portafolios.
+
+Lógica de negocio (servicios, entidades, mapeos DTO ↔ entidad).
+
+Comunicación con IA (LLM para categorizar gastos o sugerir presupuestos).
+
+Base de datos (PostgreSQL en RDS/Aurora)
+
+Tablas principales:
+
+users → datos de usuario y perfil.
+
+expenses → registro de gastos, monto, categoría, fecha, tipo.
+
+categories → catálogo de categorías.
+
+recommendations → resultados del análisis de IA y planes sugeridos.
+
+Soporta consultas complejas, joins y análisis histórico.
+
+Almacenamiento de archivos (S3)
+
+Archivos de voz, PDFs de facturas o imágenes de tickets.
+
+Solo se guarda la referencia (URL) en PostgreSQL.
+
+Servicio de IA / Pipeline LLM
+
+Procesa texto o voz para:
+
+Categorizar gastos automáticamente.
+
+Generar planes de presupuesto.
+
+Sugerir inversiones o análisis de portafolio.
+
+Puede estar dentro del mismo backend o como microservicio independiente.
+
+Opcional (Caching / Queue)
+
+Redis o SQS si en el futuro quieres manejar gran cantidad de inferencias o resultados en tiempo real.
+
+2️⃣ Flujo de datos principal
+
+Usuario registra un gasto → app móvil → API FastAPI → PostgreSQL (expenses)
+
+Usuario sube un audio/PDF → app móvil → S3 (almacenamiento) → API guarda referencia en PostgreSQL
+
+Servicio IA analiza gasto → retorna categoría y recomendaciones → API almacena resultados en PostgreSQL → app móvil muestra análisis
+
+3️⃣ Escalabilidad y migración futura
+
+PostgreSQL puede crecer con RDS/Aurora, soportando miles de usuarios sin cambiar el esquema.
+
+S3 maneja cualquier volumen de archivos multimedia.
+
+IA se puede escalar usando ECS/EKS o Lambda si decides pasar a serverless.
+
+No se necesita DynamoDB inicialmente.

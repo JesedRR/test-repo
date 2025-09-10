@@ -1,0 +1,5 @@
+pip install fastapi uvicorn[standard] sqlalchemy psycopg2-binary pydantic
+pip install openai python-dotenv
+pip install sqlalchemy psycopg2-binary
+pip install sqlalchemy[asyncio] asyncpg # Para async
+pip install pydantic[email]`
